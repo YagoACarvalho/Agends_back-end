@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.util.UriComponentsBuilder;
 
 @RestController
 @RequestMapping("/usuarios")
@@ -30,9 +31,11 @@ public class UsuarioController {
 
   @PostMapping
   @Transactional
-  public ResponseEntity cadastrarUsuario(@RequestBody @Valid UsuarioLoginRequest loginRequest) {
-    usuarioService.Cadastrar(loginRequest);
-      return ResponseEntity.ok("Usuario cadastrado com sucesso");
+  public ResponseEntity cadastrarUsuario(@RequestBody @Valid UsuarioLoginRequest loginRequest, UriComponentsBuilder uriComponentsBuilder) {
+   var usuario = usuarioService.Cadastrar(loginRequest);
+
+    var uri = uriComponentsBuilder.path("/usuarios/{id}").buildAndExpand(usuario.id()).toUri();
+    return ResponseEntity.created(uri).body(usuario);
   }
 
 

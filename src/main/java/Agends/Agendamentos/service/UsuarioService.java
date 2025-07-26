@@ -2,6 +2,7 @@ package Agends.Agendamentos.service;
 
 import Agends.Agendamentos.Entity.Usuario;
 import Agends.Agendamentos.dto.UsuarioLoginRequest;
+import Agends.Agendamentos.dto.UsuarioResponse;
 import Agends.Agendamentos.infra.validadorDeErros.ValidacaoException;
 import Agends.Agendamentos.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +20,7 @@ public class UsuarioService {
   private PasswordEncoder passwordEncoder;
 
 
-  public void Cadastrar(UsuarioLoginRequest request) {
+  public UsuarioResponse Cadastrar(UsuarioLoginRequest request) {
     if(usuarioRepository.count() > 0) {
       throw new ValidacaoException("Já existe um administrador cadastrado.");
     }
@@ -28,7 +29,7 @@ public class UsuarioService {
     usuario.setUsername(request.username());
     usuario.setSenha(passwordEncoder.encode(request.senha()));
 
-
-    usuarioRepository.save(usuario);
+    var novoUsuario = usuarioRepository.save(usuario);
+    return new UsuarioResponse(novoUsuario);
   }
 }
