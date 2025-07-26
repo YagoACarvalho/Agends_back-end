@@ -25,7 +25,7 @@ public class ProcedimentoController {
 
   @PostMapping
   @Transactional
-  public ResponseEntity criarProcedimento(@RequestBody @Valid ProcedimentoRequest dadosProcedimento) {
+  public ResponseEntity<ProcedimentoResponse> criarProcedimento(@RequestBody @Valid ProcedimentoRequest dadosProcedimento) {
     var dto = procedimentoService.criarProcedimento(dadosProcedimento);
     return ResponseEntity.ok(dto);
   }
@@ -37,10 +37,8 @@ public class ProcedimentoController {
   }
 
   @DeleteMapping("/{id}")
-  public ResponseEntity deletarProcedimento(@PathVariable Long id){
-    var procedimento = procedimentosRepository.findById(id)
-        .orElseThrow(() -> new ValidacaoException("Procedimento não encontrado!"));
-    procedimentosRepository.delete(procedimento);
+  public ResponseEntity<?> deletarProcedimento(@PathVariable Long id){
+    procedimentoService.deletarProcedimento(id);
     return ResponseEntity.ok("Procedimento deletado com sucesso!");
   }
 

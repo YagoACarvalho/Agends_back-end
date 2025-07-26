@@ -35,4 +35,10 @@ public class ProcedimentoService {
     var page = procedimentosRepository.findAll(pageable).map(ProcedimentoResponse::new);
     return  page;
   }
+
+  public void deletarProcedimento(Long id) {
+    var procedimento = procedimentosRepository.findById(id)
+      .orElseThrow(() -> new ValidacaoException("Procedimento não encontrado!"));
+    procedimentosRepository.delete(procedimento);
+  }
 }
