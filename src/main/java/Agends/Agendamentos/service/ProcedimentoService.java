@@ -6,6 +6,8 @@ import Agends.Agendamentos.dto.ProcedimentoRequest;
 import Agends.Agendamentos.infra.validadorDeErros.ValidacaoException;
 import Agends.Agendamentos.repository.ProcedimentosRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -17,7 +19,7 @@ public class ProcedimentoService {
 
 
   @Transactional
-  public ProcedimentoResponse adicionar(ProcedimentoRequest dadosProcedimento) {
+  public ProcedimentoResponse criarProcedimento(ProcedimentoRequest dadosProcedimento) {
 
     if (procedimentosRepository.existsByServico(dadosProcedimento.servico())){
       throw new ValidacaoException("Já exite um procedimento com esse nome");
@@ -29,5 +31,8 @@ public class ProcedimentoService {
     return new ProcedimentoResponse(procedimento);
   }
 
-
+  public Page<ProcedimentoResponse> listarProcedimentos(Pageable pageable){
+    var page = procedimentosRepository.findAll(pageable).map(ProcedimentoResponse::new);
+    return  page;
+  }
 }

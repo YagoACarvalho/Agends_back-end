@@ -26,13 +26,13 @@ public class ProcedimentoController {
   @PostMapping
   @Transactional
   public ResponseEntity criarProcedimento(@RequestBody @Valid ProcedimentoRequest dadosProcedimento) {
-    var dto = procedimentoService.adicionar(dadosProcedimento);
+    var dto = procedimentoService.criarProcedimento(dadosProcedimento);
     return ResponseEntity.ok(dto);
   }
 
   @GetMapping
   public ResponseEntity<Page<ProcedimentoResponse>> listarProcedimentos(Pageable pageable) {
-    var page = procedimentosRepository.findAll(pageable).map(ProcedimentoResponse::new);
+    var page = procedimentoService.listarProcedimentos(pageable);
     return ResponseEntity.ok(page);
   }
 
