@@ -36,7 +36,8 @@ public class Agendamento{
   private LocalDateTime dataHora;
 
   @Enumerated(EnumType.STRING)
-  private StatusAgendamento status = StatusAgendamento.NAO_ATENDIDO;
+  @Column(nullable = false)
+  private StatusAgendamento status;
 
 
   public Agendamento(Long id, String nome, String numeroTelefone, Procedimento procedimento, LocalDateTime dataHora) {

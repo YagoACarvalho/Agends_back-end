@@ -61,7 +61,7 @@ public class AgendamentoService {
 
 
   private Agendamento novoAgendamento(AgendamentosRequest dto) {
-    var procedimento = procedimentosRepository.findById(dto.procedimentosId())
+    var procedimento = procedimentosRepository.findById(dto.procedimentoId())
       .orElseThrow(() -> new ValidacaoException("Procedimento não é válido!"));
 
     var agendamento = new Agendamento(
