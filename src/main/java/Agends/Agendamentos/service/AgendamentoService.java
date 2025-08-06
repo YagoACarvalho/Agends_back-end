@@ -51,10 +51,11 @@ public class AgendamentoService {
   }
 
 
-  public void marcarComoAtendido(Long id) {
+  public AgendamentoResponse marcarComoAtendido(Long id) {
     var agendamento = procurarAgendamentoId(id);
     agendamento.atender();
-    agendamentoRepository.save(agendamento);
+   var agendamentoAtualizado = agendamentoRepository.save(agendamento);
+   return new AgendamentoResponse(agendamento);
   }
 
 
