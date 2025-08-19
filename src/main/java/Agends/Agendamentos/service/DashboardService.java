@@ -1,12 +1,14 @@
 package Agends.Agendamentos.service;
 
 
+import Agends.Agendamentos.Entity.StatusAgendamento;
 import Agends.Agendamentos.dto.DashboardResponse;
 import Agends.Agendamentos.dto.ProximoAgendamento;
 import Agends.Agendamentos.repository.AgendamentoRepository;
 import org.springframework.stereotype.Service;
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.stream.Collectors;
 
 @Service
@@ -34,17 +36,10 @@ public class DashboardService {
       LocalDate.now().getMonthValue()
     );
 
-    var proximos =  agendamentoRepository.findTop5ByOrderByDataHoraAsc()
-        .stream()
-      .map(a -> new ProximoAgendamento(
-        a.getId(),
-        a.getNome(),
-        a.getProcedimento(),
-        a.getDataHora()
-
-      ))
-        .collect(Collectors.toList());
-
+    var proximos =  agendamentoRepository.findByStatusNotAndDataHoraGreaterThanEqual(
+      StatusAgendamento.ATENDIDO,
+      LocalDate.now().atStartOfDay());
+    System.out.println("Próximos agendamentos: " + proximos);
     return new DashboardResponse(hoje, mes, faturamentoMes, proximos);
 
   }

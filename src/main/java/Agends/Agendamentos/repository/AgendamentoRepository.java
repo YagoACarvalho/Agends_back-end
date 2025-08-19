@@ -2,6 +2,8 @@ package Agends.Agendamentos.repository;
 
 
 import Agends.Agendamentos.Entity.Agendamento;
+import Agends.Agendamentos.Entity.StatusAgendamento;
+import Agends.Agendamentos.dto.ProximoAgendamento;
 import jakarta.validation.constraints.NotNull;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -18,4 +20,9 @@ public interface AgendamentoRepository extends JpaRepository<Agendamento, Long> 
   BigDecimal sumPrecoByMes(int ano, int mes);
 
   List<Agendamento> findTop5ByOrderByDataHoraAsc();
+
+  List<Agendamento> findByStatusNotAndDataHoraGreaterThanEqual(
+    StatusAgendamento status,
+    LocalDateTime dataHora
+  );
 }
