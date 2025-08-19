@@ -17,9 +17,14 @@ public class Configuracao {
   private Long id;
 
   @OneToOne
+  @JoinColumn(name = "usuario_id", nullable = false)
   private Usuario usuario;
 
   private LocalTime horarioAbertura;
   private LocalTime horarioFechamento;
 
+  @Enumerated(EnumType.STRING)
+  private DiaSemana diaSemana;
+
+  private boolean ativo;
 }
