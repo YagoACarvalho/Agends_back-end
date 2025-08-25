@@ -6,6 +6,8 @@ import Agends.Agendamentos.dto.UsuarioResponse;
 import Agends.Agendamentos.infra.validadorDeErros.ValidacaoException;
 import Agends.Agendamentos.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -31,5 +33,10 @@ public class UsuarioService {
 
     var novoUsuario = usuarioRepository.save(usuario);
     return new UsuarioResponse(novoUsuario);
+  }
+
+  public Page<UsuarioResponse> listar(Pageable pageable) {
+    var page = usuarioRepository.findAll(pageable);
+    return page.map(UsuarioResponse::new);
   }
 }

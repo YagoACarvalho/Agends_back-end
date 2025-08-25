@@ -26,8 +26,7 @@ public class Usuario implements UserDetails {
   private String username;
   private String senha;
 
-  @OneToOne(cascade = CascadeType.ALL)
-  @JoinColumn(name = "configuracao_id")
+  @OneToOne(mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true)
   private Configuracao configuracao;
 
 

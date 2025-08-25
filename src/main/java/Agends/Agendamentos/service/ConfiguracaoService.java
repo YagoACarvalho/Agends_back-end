@@ -1,7 +1,7 @@
 package Agends.Agendamentos.service;
 
 import Agends.Agendamentos.Entity.Configuracao;
-import Agends.Agendamentos.dto.ConfiguracaoHorarioFuncionamentoDTO;
+import Agends.Agendamentos.dto.ConfigHorarioDiaFuncionamentoRequest;
 import Agends.Agendamentos.infra.validadorDeErros.ValidacaoException;
 import Agends.Agendamentos.repository.ConfiguracaoRepository;
 import Agends.Agendamentos.repository.UsuarioRepository;
@@ -17,7 +17,7 @@ public class ConfiguracaoService {
   private ConfiguracaoRepository configuracaoRepository;
 
 
-  public ConfiguracaoHorarioFuncionamentoDTO salvarConfiguracao(Long usuarioId, ConfiguracaoHorarioFuncionamentoDTO dto) {
+  public ConfigHorarioDiaFuncionamentoRequest salvarConfiguracao(Long usuarioId, ConfigHorarioDiaFuncionamentoRequest dto) {
     var usuario = usuarioRepository.findById(usuarioId)
       .orElseThrow(() -> new ValidacaoException("Usuário não encontrado"));
 
@@ -25,13 +25,13 @@ public class ConfiguracaoService {
 
     if (config == null) {
       config = new Configuracao();
-      config.setHorarioAbertura(dto.horarioAbertura());
-      config.setHorarioFechamento(dto.horarioFechamento());
+      config.setUsuario(usuario);
       usuario.setConfiguracao(config);
-    } else {
-      config.setHorarioAbertura(dto.horarioAbertura());
-      config.setHorarioFechamento(dto.horarioFechamento());
     }
+
+    config.setHorarioAbertura(dto.horarioAbertura());
+    config.setHorarioFechamento(dto.horarioFechamento());
+    config.setDiaSemana(dto.diaSemana());
 
     usuarioRepository.save(usuario);
 

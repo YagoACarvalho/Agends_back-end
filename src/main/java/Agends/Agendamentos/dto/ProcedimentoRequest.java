@@ -17,8 +17,5 @@ public record ProcedimentoRequest(
 
 ) {
 
-  public ProcedimentoRequest(Procedimento procedimento) {
-    this(procedimento.getId(), procedimento.getServico(), procedimento.getPreco(), procedimento.getDuracao());
-  }
 
 }

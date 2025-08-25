@@ -1,7 +1,8 @@
 package Agends.Agendamentos.controller;
 
-import Agends.Agendamentos.dto.ConfiguracaoHorarioFuncionamentoDTO;
+import Agends.Agendamentos.dto.ConfigHorarioDiaFuncionamentoRequest;
 import Agends.Agendamentos.service.ConfiguracaoService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,9 +14,9 @@ public class ConfiguracoesController {
   private ConfiguracaoService configuracaoService;
 
 
-  @GetMapping("/{usuarioId}")
-  public ConfiguracaoHorarioFuncionamentoDTO salvarConfiguracao(@PathVariable Long UsuarioId, @RequestBody ConfiguracaoHorarioFuncionamentoDTO dto) {
-    return configuracaoService.salvarConfiguracao(UsuarioId, dto);
+  @PutMapping("/{id}")
+  public ConfigHorarioDiaFuncionamentoRequest salvarConfiguracao(@PathVariable Long id, @RequestBody @Valid ConfigHorarioDiaFuncionamentoRequest dto) {
+    return configuracaoService.salvarConfiguracao(id, dto);
   }
 
 
