@@ -26,7 +26,7 @@ public class Usuario implements UserDetails {
   private String username;
   private String senha;
 
-  @OneToOne(mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true)
+  @OneToOne(mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
   private Configuracao configuracao;
 
 

@@ -25,13 +25,13 @@ public class ConfiguracaoService {
 
     if (config == null) {
       config = new Configuracao();
-      config.setUsuario(usuario);
       usuario.setConfiguracao(config);
     }
 
     config.setHorarioAbertura(dto.horarioAbertura());
     config.setHorarioFechamento(dto.horarioFechamento());
     config.setDiaSemana(dto.diaSemana());
+
 
     usuarioRepository.save(usuario);
 
